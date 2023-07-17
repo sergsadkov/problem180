@@ -6,7 +6,7 @@ from setuptools import setup
 """
 
 :authors: sergsadkov
-:license: None
+:license: Apache License, Version 2.0, see LICENSE file
 :copyright: (c) 2023 sergsadkov
 """
 
