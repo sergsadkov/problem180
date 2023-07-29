@@ -36,7 +36,7 @@ setup(
     license='Apache License, Version 2.0, see LICENSE file',
 
     packages=['problem180meridian'],
-    install_requires=[],
+    install_requires=['numpy', 'GDAL'],
 
     classifiers=[
         'License :: OSI Approved :: Apache Software License',
