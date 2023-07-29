@@ -23,9 +23,7 @@ setup(
     author='sergsadkov',
     author_email='sergsadkov@gmail.com',
 
-    description=(
-        u'Python module to fix 180 degree crossing issue for vector geodata',
-    ),
+    description=u'Fixes 180 degree crossing issue for vector geodata',
 
     long_description=long_description,
     long_description_content_type='text/markdown',
