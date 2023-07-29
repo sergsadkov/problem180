@@ -5,8 +5,9 @@
 :copyright: (c) 2023 sergsadkov
 """
 
-from .problem180meridian import (check180lon, cross180lon, split180lon,
-                                 split180lonMultipolygon)
+
+from .problem180meridian import *
+
 
 __author__ = 'sergsadkov'
 __version__ = '0.0.1'
