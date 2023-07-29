@@ -1,5 +1,5 @@
 """
-Testing problem180meridian.geometries
+Testing problem180meridian.Geometries
 """
 
 from problem180meridian import Geometries

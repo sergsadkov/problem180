@@ -1,5 +1,5 @@
 """
-Testing problem180meridian.split180()
+Testing problem180meridian.split180_multipolygon()
 """
 
 from problem180meridian import split180_multipolygon

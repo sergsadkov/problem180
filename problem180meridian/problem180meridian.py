@@ -143,18 +143,18 @@ def check180(coordinates):
 
 
 # Create coordinates for two points in a segment crossing 180th meridian
-# Setting distance_from180lon one can separate them from each other and
+# Setting lon_buffer one can separate them from each other and
 # the meridian itself
-def cross180(coord1, coord2, distance_from_180lon=0):
+def cross180(coord1, coord2, lon_buffer=0):
 
     if coord1[0] > 0:
         assert coord2[0] < 0
         img_lon2 = coord2[0] + 360
-        new_lon1 = 180 - abs(distance_from_180lon)
+        new_lon1 = 180 - abs(lon_buffer)
     else:
         assert coord2[0] >= 0
         img_lon2 = coord2[0] - 360
-        new_lon1 = abs(distance_from_180lon) - 180
+        new_lon1 = abs(lon_buffer) - 180
 
     if (img_lon2 - coord1[0]) == 0:
         angle_coefficient = 1
@@ -182,7 +182,7 @@ def split180(coordinates, check, lon_buffer=0):
         else:
             new_coord1, new_coord2 = cross180(
                 *tuple(coordinates[i:i + 2]),
-                distance_from_180lon=lon_buffer)
+                lon_buffer=lon_buffer)
             chains[-1].append(new_coord1)
             chains.append([new_coord2, coordinates[i+1]])
 
