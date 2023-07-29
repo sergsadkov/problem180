@@ -1,5 +1,9 @@
 import numpy as np
-from osgeo import ogr
+
+try:
+    from osgeo import ogr
+except ImportError:
+    import ogr
 
 
 __all__ = [
