@@ -33,13 +33,13 @@ setup(
     url='https://github.com/sergsadkov/problem180meridian',
     download_url='https://github.com/sergsadkov/problem180meridian/archive/main.zip',
 
-    license=None,
+    license='Apache License, Version 2.0, see LICENSE file',
 
     packages=['problem180meridian'],
     install_requires=[],
 
     classifiers=[
-        'License :: None',
+        'License :: OSI Approved :: Apache Software License',
         'Operating System :: OS Independent',
         'Intended Audience :: End Users/Desktop',
         'Intended Audience :: Developers',
