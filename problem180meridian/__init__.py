@@ -7,6 +7,7 @@
 
 
 from .problem180meridian import *
+from .get_coordinates import *
 
 
 __author__ = 'sergsadkov'
