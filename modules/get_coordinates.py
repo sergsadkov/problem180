@@ -7,6 +7,12 @@ from osgeo import ogr
 __all__ = ['points_from_wkt', 'points_from_geometry']
 
 
+class WktParsingException(Exception):
+
+    def __init__(self, *args, **kwargs):
+        pass
+
+
 def float_xy_coordinates(coordinate_string):
     coordinate_list = coordinate_string.strip().split(' ')[:2]
     x = float(coordinate_list[0])
