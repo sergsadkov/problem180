@@ -71,6 +71,26 @@ def points_from_wkt(wkt):
         return parse_wkt_multichain(wkt_multichain_search.group())
 
 
+def wkt_close_chain(geometry_type):
+    if geometry_type in ('LINESTRING', 'MULTILINESTRING'):
+        return False
+    elif geometry_type in ('POLYGON', 'MULTIPOLYGON'):
+        return True
+    else:
+        raise WktParsingException(f'Incorrect geometry type: {geometry_type}')
+
+
+def wkt_brackets(geometry_type):
+    if geometry_type in ['LINESTRING']:
+        return 1
+    elif geometry_type in ['POLYGON', 'MULTILINESTRING']:
+        return 2
+    elif geometry_type in ['MULTIPOLYGON']:
+        return 3
+    else:
+        raise WktParsingException(f'Incorrect geometry type: {geometry_type}')
+
+
 def points_from_geometry(geometry):
 
     assert isinstance(geometry, ogr.Geometry)
