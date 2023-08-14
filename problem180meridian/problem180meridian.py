@@ -170,11 +170,16 @@ def cross180(coord1, coord2, lon_buffer=0):
     return (new_lon1, new_lat1), (- new_lon1, new_lat2)
 
 
-# Split polygon geometry by the 180th meridian creating a multipolygon
-def split180(coordinates, check, lon_buffer=0):
+# Split geometry by the 180th meridian creating a multipolygon
+def split180(coordinates, check, geometry_type='MULTIPOLYGON', lon_buffer=0):
 
     assert len(coordinates) - 1 == len(check)
-    assert coordinates[0] == coordinates[-1]
+
+    close_chain = wkt_close_chain(geometry_type)
+
+    if close_chain:
+        assert coordinates[0] == coordinates[-1]
+
     chains = [[coordinates[0]]]
 
     for i in range(len(check)):
@@ -189,10 +194,11 @@ def split180(coordinates, check, lon_buffer=0):
             chains.append([new_coord2, coordinates[i+1]])
 
     # need to finish all the polygon chains to make correct wkt
-    if len(chains) > 1:
-        chains[0].extend(chains.pop())
-        for chain in chains[1:]:
-            chain.append(chain[0])
+    if close_chain:
+        if len(chains) > 1:
+            chains[0].extend(chains.pop())
+            for chain in chains[1:]:
+                chain.append(chain[0])
 
     wkt_list = ['MULTIPOLYGON (((%s)))' % ','.join(['%f %f' %
                 (p[0], p[1]) for p in chain]) for chain in chains]
