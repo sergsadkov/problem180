@@ -1,1 +1,1 @@
-from .problem180meridian import *
+from problem180meridian import *

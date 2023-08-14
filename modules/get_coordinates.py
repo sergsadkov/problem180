@@ -4,7 +4,7 @@ import re
 from osgeo import ogr
 
 
-__all__ = ['points_from_wkt', 'points_from_geometry']
+__all__ = ['points_from_wkt', 'points_from_geometry', 'wkt_close_chain', 'wkt_brackets']
 
 
 class WktParsingException(Exception):

@@ -5,6 +5,8 @@ try:
 except ImportError:
     import ogr
 
+from ..modules import wkt_close_chain
+
 
 __all__ = [
     'Geometries', 'check180', 'cross180', 'split180', 'split180_multipolygon'

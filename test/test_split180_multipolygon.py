@@ -2,7 +2,7 @@
 Testing problem180meridian.split180_multipolygon()
 """
 
-from problem180meridian import split180_multipolygon
+from ..problem180meridian import split180_multipolygon
 
 
 # Testing integer coordinates without crossing 180th meridian

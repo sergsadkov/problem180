@@ -2,9 +2,10 @@
 Testing problem180meridian.Geometries
 """
 
-from problem180meridian import Geometries
 
 from osgeo import ogr
+
+from ..problem180meridian import Geometries
 
 
 # Testing unification 4 geometries with int coordinates,

@@ -2,7 +2,7 @@
 Testing problem180meridian.cross180()
 """
 
-from problem180meridian import cross180
+from ..problem180meridian import cross180
 
 
 # Test cross180() for integer coordinates upper and below zero and
