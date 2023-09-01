@@ -26,23 +26,25 @@ def parse_wkt_chain(wkt_coordinates_chain):
     return coordinate_list
 
 
-def parse_wkt_multichain(wkt_multichain):
+def parse_wkt_multichain(wkt_multichain, geom_type):
 
-    brackets = len(re.search(r'\)+$', wkt_multichain).group())
+    if geom_type == 'LINESTRING':
+        return [parse_wkt_chain(wkt_multichain)]
 
-    if brackets == 1:
-        return [[parse_wkt_chain(wkt_multichain)]]
+    elif geom_type == 'MULTILINESTRING':
+        chains = wkt_multichain.strip('() ').split('),')
+        return [parse_wkt_chain(chain) for chain in chains]
 
-    elif brackets == 2:
+    elif geom_type == 'POLYGON':
         chains = wkt_multichain.strip('() ').split('),')
         return [[parse_wkt_chain(chain) for chain in chains]]
 
-    elif brackets == 3:
+    elif geom_type == 'MULTIPOLYGON':
         chains2 = wkt_multichain.strip('() ').split(')),')
         return [[parse_wkt_chain(chain) for chain in chains.split('),')] for chains in chains2]
 
     else:
-        print('Wrong brackets level:', brackets)
+        raise WktParsingException('Wrong geometry type:', geom_type)
 
 
 def points_from_wkt(wkt):
@@ -68,7 +70,7 @@ def points_from_wkt(wkt):
         return None
 
     else:
-        return parse_wkt_multichain(wkt_multichain_search.group())
+        return parse_wkt_multichain(wkt_multichain_search.group(), geometry_type)
 
 
 def wkt_close_chain(geometry_type):
