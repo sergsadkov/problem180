@@ -8,7 +8,7 @@ except ImportError:
 from ..modules import Geometries, wkt_close_chain
 
 
-__all__ = ['check180', 'cross180', 'split180', 'split180_multipolygon']
+__all__ = ['check180', 'cross180', 'split180_coordinates', 'split180_multipolygon']
 
 
 # Returns True if value is positive or zero and False if it is negative
@@ -63,15 +63,10 @@ def cross180(coord1, coord2, lon_buffer=0):
     return (new_lon1, new_lat1), (- new_lon1, new_lat2)
 
 
-# Split geometry by the 180th meridian creating a multipolygon
-def split180(coordinates, check, geometry_type='MULTIPOLYGON', lon_buffer=0):
+# Split coordinates by the 180th meridian creating new coordinate chains
+def split180_coordinates(coordinates, check, lon_buffer=0):
 
     assert len(coordinates) - 1 == len(check)
-
-    close_chain = wkt_close_chain(geometry_type)
-
-    if close_chain:
-        assert coordinates[0] == coordinates[-1]
 
     chains = [[coordinates[0]]]
 
@@ -86,18 +81,26 @@ def split180(coordinates, check, geometry_type='MULTIPOLYGON', lon_buffer=0):
             chains[-1].append(new_coord1)
             chains.append([new_coord2, coordinates[i+1]])
 
+    return chains
+
+
+# Converts coordinate chains into a list of MultiPolygon geometry
+def coordinate_chains_to_multilipolygon(chains):
+
+    # Chains from split180_coordinates are expected;
     # need to finish all the polygon chains to make correct wkt
-    if close_chain:
-        if len(chains) > 1:
-            chains[0].extend(chains.pop())
-            for chain in chains[1:]:
-                chain.append(chain[0])
+    if len(chains) > 1:
+        chains[0].extend(chains.pop())
+        for chain in chains[1:]:
+            chain.append(chain[0])
 
-    wkt_list = ['MULTIPOLYGON (((%s)))' % ','.join(['%f %f' %
-                (p[0], p[1]) for p in chain]) for chain in chains]
+    wkt_list = [
+        'MULTIPOLYGON (((%s)))' %
+        ','.join(['%f %f' % (p[0], p[1]) for p in chain]) for chain in chains
+    ]
 
-    polygons = [ogr.Geometry(wkt=wkt) for wkt in wkt_list]
-    geoms = Geometries(*polygons)
+    geom_list = [ogr.Geometry(wkt=wkt) for wkt in wkt_list]
+    geoms = Geometries(*geom_list)
     multipolygon = geoms.multipolygon()
 
     return multipolygon
@@ -113,7 +116,9 @@ def split180_multipolygon(coordinates, lon_buffer=0):
         cross, check = check180(coordinates[0])
 
         if cross:
-            geoms.join_geometry(split180(poly, check, lon_buffer=lon_buffer))
+            chains = split180_coordinates(poly, check, lon_buffer=lon_buffer)
+            multipolygon = coordinate_chains_to_multilipolygon(chains)
+            geoms.join_geometry(multipolygon)
         else:
             point_str = ','.join(['%f %f' % (p[0], p[1]) for p in poly])
             wkt = f"MULTIPOLYGON ((({point_str})))"
