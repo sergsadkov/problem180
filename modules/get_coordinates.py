@@ -53,24 +53,25 @@ def points_from_wkt(wkt):
 
     if geometry_type in ('POINT', 'MULTIPOINT'):
         print('No crossing for type:', geometry_type)
-        return None
+        return None, geometry_type
 
     elif geometry_type not in ('LINESTRING', 'MULTILINESTRING', 'POLYGON', 'MULTIPOLYGON'):
         print('Incorrect geometry type for crossing check:', geometry_type)
-        return None
+        return None, geometry_type
 
     elif re.search('EMPTY$', geometry_type):
         print('Geometry is empty:', wkt)
-        return None
+        return None, geometry_type
 
     wkt_multichain_search = re.search(r'\([()\d\., ]+\)', wkt)
 
     if wkt_multichain_search is None:
         print('Wkt coordinates not found:', wkt)
-        return None
+        return None, geometry_type
 
     else:
-        return parse_wkt_multichain(wkt_multichain_search.group(), geometry_type)
+        coordinates = parse_wkt_multichain(wkt_multichain_search.group(), geometry_type)
+        return coordinates, geometry_type
 
 
 def wkt_close_chain(geometry_type):
@@ -103,7 +104,7 @@ def points_from_geometry(geometry):
 if __name__ == '__main__':
 
     def check_parsing(wkt):
-        points = points_from_wkt(wkt)
+        points, geometry_type = points_from_wkt(wkt)
         if points is not None:
             print(points)
 

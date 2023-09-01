@@ -6,7 +6,7 @@ from ..modules import points_from_wkt
 
 
 def check_parsing(wkt):
-    points = points_from_wkt(wkt)
+    points, geometry_type = points_from_wkt(wkt)
     if points is not None:
         print(points)
 

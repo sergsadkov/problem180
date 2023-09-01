@@ -9,7 +9,7 @@ from ..modules import points_from_geometry
 
 def check_parsing(feature):
     geometry = feature.GetGeometryRef()
-    points = points_from_geometry(geometry)
+    points, geometry_type = points_from_geometry(geometry)
     if points is not None:
         print(points)
 
