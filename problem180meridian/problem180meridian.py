@@ -8,7 +8,8 @@ except ImportError:
 from ..modules import Geometries, wkt_close_chain
 
 
-__all__ = ['check180', 'cross180', 'split180_coordinates', 'split180_multipolygon']
+__all__ = ['check180', 'cross180', 'split180_coordinates',
+           'split180_multipolygon', 'split180_multilinestring']
 
 
 # Returns True if value is positive or zero and False if it is negative
@@ -82,6 +83,32 @@ def split180_coordinates(coordinates, check, lon_buffer=0):
             chains.append([new_coord2, coordinates[i+1]])
 
     return chains
+
+
+# Split linestring/multilinestring geometry by the 180th meridian
+def split180_multilinestring(coordinates, lon_buffer=0):
+
+    chains = []
+
+    for poly in coordinates:
+
+        cross, check = check180(coordinates[0])
+
+        if cross:
+            chain = split180_coordinates(poly, check, lon_buffer=lon_buffer)
+            chains.extend(chain)
+        else:
+            chains.append(poly)
+
+    wkt = 'MULTILINESTRING ((%s))' % '),('.join(
+        [
+            ','.join([f"{p[0]} {p[1]}" for p in chain]) for chain in chains
+        ]
+    )
+
+    multilinestring = ogr.Geometry(wkt=wkt)
+
+    return multilinestring
 
 
 # Converts coordinate chains into a list of MultiPolygon geometry
