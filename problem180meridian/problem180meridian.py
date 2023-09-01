@@ -112,7 +112,7 @@ def split180_multilinestring(coordinates, lon_buffer=0):
 
 
 # Converts coordinate chains into a list of MultiPolygon geometry
-def coordinate_chains_to_multilipolygon(chains):
+def coordinate_chains_to_multipolygon(chains):
 
     # Chains from split180_coordinates are expected;
     # need to finish all the polygon chains to make correct wkt
@@ -144,7 +144,7 @@ def split180_multipolygon(coordinates, lon_buffer=0):
 
         if cross:
             chains = split180_coordinates(poly, check, lon_buffer=lon_buffer)
-            multipolygon = coordinate_chains_to_multilipolygon(chains)
+            multipolygon = coordinate_chains_to_multipolygon(chains)
             geoms.join_geometry(multipolygon)
         else:
             point_str = ','.join(['%f %f' % (p[0], p[1]) for p in poly])
