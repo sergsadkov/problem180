@@ -133,22 +133,23 @@ def coordinate_chains_to_multipolygon(chains):
     return multipolygon
 
 
-# Split polygon/multipolygon geometry by the 180th meridian
+# Split polygon/multipolygon geometry coordinates by the 180th meridian
 def split180_multipolygon(coordinates, lon_buffer=0):
 
     geoms = Geometries()
 
-    for poly in coordinates:
+    for polygon in coordinates:
+        for arring in polygon:
 
-        cross, check = check180(coordinates[0])
+            cross, check = check180(arring)
 
-        if cross:
-            chains = split180_coordinates(poly, check, lon_buffer=lon_buffer)
-            multipolygon = coordinate_chains_to_multipolygon(chains)
-            geoms.join_geometry(multipolygon)
-        else:
-            point_str = ','.join(['%f %f' % (p[0], p[1]) for p in poly])
-            wkt = f"MULTIPOLYGON ((({point_str})))"
-            geoms.join_geometry(ogr.Geometry(wkt=wkt))
+            if cross:
+                chains = split180_coordinates(arring, check, lon_buffer=lon_buffer)
+                multipolygon = coordinate_chains_to_multipolygon(chains)
+                geoms.join_geometry(multipolygon)
+            else:
+                point_str = ','.join(['%f %f' % (p[0], p[1]) for p in arring])
+                wkt = f"MULTIPOLYGON ((({point_str})))"
+                geoms.join_geometry(ogr.Geometry(wkt=wkt))
 
     return geoms.multipolygon()
