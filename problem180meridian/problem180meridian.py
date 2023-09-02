@@ -5,11 +5,12 @@ try:
 except ImportError:
     import ogr
 
-from ..modules import Geometries, wkt_close_chain
+from ..modules import Geometries, points_from_geometry
 
 
 __all__ = ['check180', 'cross180', 'split180_coordinates',
-           'split180_multipolygon', 'split180_multilinestring']
+           'split180_multipolygon', 'split180_multilinestring',
+           'split180_geometry']
 
 
 # Returns True if value is positive or zero and False if it is negative
@@ -153,3 +154,26 @@ def split180_multipolygon(coordinates, lon_buffer=0):
                 geoms.join_geometry(ogr.Geometry(wkt=wkt))
 
     return geoms.multipolygon()
+
+
+# Split ogr.Geometry by the 180th meridian
+def split180_geometry(geometry, lon_buffer=0):
+
+    coordinates, geometry_type = points_from_geometry(geometry)
+
+    if geometry_type is None:
+        print('Geometry type not found')
+        return None
+
+    elif geometry_type in ('POINT', 'MULTIPOINT'):
+        return geometry
+
+    elif geometry_type in ('LINESTRING', 'MULTILINESTRING'):
+        return split180_multilinestring(coordinates, lon_buffer=lon_buffer)
+
+    elif geometry_type in ('POLYGON', 'MULTIPOLYGON'):
+        return split180_multipolygon(coordinates, lon_buffer=lon_buffer)
+
+    else:
+        print('Unsupported geometry type', geometry_type)
+        return None
