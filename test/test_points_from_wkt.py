@@ -2,7 +2,7 @@
 Testing problem180meridian.points_from_wkt()
 """
 
-from ..problem180meridian.modules import points_from_wkt
+from ..problem180meridian.get_coordinates import points_from_wkt
 
 
 def check_parsing(wkt):

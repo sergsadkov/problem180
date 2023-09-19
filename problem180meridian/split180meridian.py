@@ -5,10 +5,8 @@ try:
 except ImportError:
     import ogr
 
-try:
-    from modules import PolygonHierarchy, points_from_geometry
-except ImportError:
-    from ..problem180meridian.modules import PolygonHierarchy, points_from_geometry
+from .polygonhierarchy import PolygonHierarchy
+from .get_coordinates import points_from_geometry
 
 
 __all__ = ['check180', 'cross180', 'split180_coordinates',

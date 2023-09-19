@@ -4,7 +4,7 @@ Testing problem180meridian.points_from_wkt()
 
 from osgeo import ogr
 
-from ..problem180meridian.modules import points_from_geometry
+from ..problem180meridian.get_coordinates import points_from_geometry
 
 
 def check_parsing(feature):
