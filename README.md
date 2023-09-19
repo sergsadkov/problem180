@@ -16,7 +16,7 @@ To use it from Python console one may use:
 `import problem180meridian`
 
 ## Usage
-The module contains the following functions (version 0.1.3):
+The module contains the following functions (version 0.1.4):
 
 `check180(coordinates)` - checks if any segment in a pair of coordinates crosses 180th meridian and returns a tuple of two values. The first one is False if no crossing was found, and True if at least one was found. Without any crossing, the second value is None, otherwise it's an array of bool values where True marks the 180th meridian crossing and False means no crossing.
 
