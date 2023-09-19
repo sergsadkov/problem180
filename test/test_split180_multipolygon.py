@@ -16,6 +16,17 @@ def test_split180_int_nochange():
     assert output == test_output
 
 
+# Testing integer coordinates with crossing 180th meridian
+def test_split180_int_change():
+
+    test_coordinates = [[((100, 0), (100, 10), (-160, 10), (-160, 0), (100, 0))]]
+    output = 'MULTIPOLYGON (((100 0,100 10,180 10,180 0,100 0)),((-180 10,-160 10,-160 0,-180 0,-180 10)))'
+
+    test_output = split180_multipolygon(test_coordinates).ExportToWkt()
+    print(test_output)
+    assert output == test_output
+
+
 # Testing float coordinates without crossing 180th meridian
 def test_split180_float_nochange():
 

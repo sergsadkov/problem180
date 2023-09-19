@@ -63,7 +63,7 @@ def points_from_wkt(wkt):
         print('Geometry is empty:', wkt)
         return None, geometry_type
 
-    wkt_multichain_search = re.search(r'\([()\d\., ]+\)', wkt)
+    wkt_multichain_search = re.search(r'\([()\-\d\., ]+\)', wkt)
 
     if wkt_multichain_search is None:
         print('Wkt coordinates not found:', wkt)
