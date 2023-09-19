@@ -1,6 +1,6 @@
 """
 :authors: sergsadkov
-:license: None
+:license:  Apache License, Version 2.0
 
 :copyright: (c) 2023 sergsadkov
 """
