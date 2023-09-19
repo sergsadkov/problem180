@@ -165,11 +165,10 @@ def split180_geometry(geometry, lon_buffer=0):
     coordinates, geometry_type = points_from_geometry(geometry)
 
     if geometry_type is None:
-        print('Geometry type not found')
-        return None
+        raise Exception('Geometry type not found')
 
     elif geometry_type in ('POINT', 'MULTIPOINT'):
-        return geometry
+        pass
 
     elif geometry_type in ('LINESTRING', 'MULTILINESTRING'):
         return split180_multilinestring(coordinates, lon_buffer=lon_buffer)
@@ -178,5 +177,6 @@ def split180_geometry(geometry, lon_buffer=0):
         return split180_multipolygon(coordinates, lon_buffer=lon_buffer)
 
     else:
-        print('Unsupported geometry type', geometry_type)
-        return None
+        raise Warning(f'Unsupported geometry type {geometry_type}')
+
+    return geometry
