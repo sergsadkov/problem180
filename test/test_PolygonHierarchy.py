@@ -5,7 +5,7 @@ Testing problem180meridian.Geometries
 
 from osgeo import ogr
 
-from ..modules import PolygonHierarchy
+from ..problem180meridian.modules import PolygonHierarchy
 
 
 # Testing unification 4 geometries with int coordinates,

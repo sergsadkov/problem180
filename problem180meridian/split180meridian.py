@@ -8,7 +8,7 @@ except ImportError:
 try:
     from modules import PolygonHierarchy, points_from_geometry
 except ImportError:
-    from ..modules import PolygonHierarchy, points_from_geometry
+    from ..problem180meridian.modules import PolygonHierarchy, points_from_geometry
 
 
 __all__ = ['check180', 'cross180', 'split180_coordinates',
