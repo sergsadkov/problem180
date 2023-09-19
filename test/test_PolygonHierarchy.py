@@ -5,7 +5,7 @@ Testing problem180meridian.Geometries
 
 from osgeo import ogr
 
-from ..modules import Geometries
+from ..modules import PolygonHierarchy
 
 
 # Testing unification 4 geometries with int coordinates,
@@ -20,7 +20,7 @@ def test_geometries_int_1within_1touch():
         ogr.Geometry(wkt='MULTIPOLYGON (((0 0, 0 100, 100 100, 100 0, 0 0)))'),
     ]
 
-    hierarchy = Geometries(*test_geometries)
+    hierarchy = PolygonHierarchy(*test_geometries)
     output = hierarchy.multipolygon().ExportToWkt()
 
     assert output == 'POLYGON ((100 0,1 0,1 1,0 1,0 100,100 100,100 0),(11 11,10 11,10 10,11 10,11 11),(21 20,21 21,20 21,20 20,21 20))'

@@ -1,2 +1,2 @@
 from .get_coordinates import *
-from .geometries import *
+from .polygonhierarchy import *

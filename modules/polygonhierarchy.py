@@ -1,7 +1,7 @@
 from osgeo import ogr
 
 
-__all__ = ['Geometries']
+__all__ = ['PolygonHierarchy']
 
 
 class GeometriesError(Exception):
@@ -13,7 +13,7 @@ class GeometriesError(Exception):
 # Arranges a set of polygons to find out which of them are within others
 # If any of them is within others they are cut off while creating a new
 # multipolygon
-class Geometries:
+class PolygonHierarchy:
 
     def __init__(self, *geom_tuple, main_geom=None, level=0):
 
@@ -65,7 +65,7 @@ class Geometries:
         if main_geometry_check:
             return main_geometry_check
 
-        new_geoms = Geometries(main_geom=geometry, level=self.level + 1)
+        new_geoms = PolygonHierarchy(main_geom=geometry, level=self.level + 1)
         separate = True
 
         for i in range(len(self.geometries)-1, -1, -1):

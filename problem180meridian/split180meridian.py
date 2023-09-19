@@ -5,7 +5,7 @@ try:
 except ImportError:
     import ogr
 
-from ..modules import Geometries, points_from_geometry
+from ..modules import PolygonHierarchy, points_from_geometry
 
 
 __all__ = ['check180', 'cross180', 'split180_coordinates',
@@ -128,7 +128,7 @@ def coordinate_chains_to_multipolygon(chains):
     ]
 
     geom_list = [ogr.Geometry(wkt=wkt) for wkt in wkt_list]
-    geoms = Geometries(*geom_list)
+    geoms = PolygonHierarchy(*geom_list)
     multipolygon = geoms.multipolygon()
 
     return multipolygon
@@ -137,7 +137,7 @@ def coordinate_chains_to_multipolygon(chains):
 # Split polygon/multipolygon geometry coordinates by the 180th meridian
 def split180_multipolygon(coordinates, lon_buffer=0):
 
-    geoms = Geometries()
+    geoms = PolygonHierarchy()
 
     for polygon in coordinates:
         for arring in polygon:

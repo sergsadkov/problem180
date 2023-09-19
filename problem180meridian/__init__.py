@@ -6,7 +6,7 @@
 """
 
 
-from .problem180meridian import *
+from .split180meridian import *
 
 __author__ = 'sergsadkov'
 __version__ = '0.1.0'
