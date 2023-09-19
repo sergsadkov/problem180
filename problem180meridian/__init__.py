@@ -9,5 +9,5 @@
 from .split180meridian import *
 
 __author__ = 'sergsadkov'
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 __email__ = 'sergsadkov@gmail.com'
