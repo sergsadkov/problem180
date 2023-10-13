@@ -158,7 +158,18 @@ def split180_multipolygon(coordinates, lon_buffer=0):
 
 
 # Split ogr.Geometry by the 180th meridian
-def split180_geometry(geometry, lon_buffer=0):
+def split180_geometry(geometry, lon_buffer=0, filter_valid_polygons=False):
+
+    # Avoid false splitting for topologically correct polygons
+    if filter_valid_polygons:
+        gtype = geometry.GetGeometryType()
+        if geometry.IsValid():
+            if gtype == 6:
+                return geometry
+            elif gtype == 3:
+                new_wkt = f'MULTIPOLYGON ({geometry.ExportToWkt()})'
+                new_geometry = ogr.CreateGeometryFromWkt(new_wkt)
+                return new_geometry
 
     coordinates, geometry_type = points_from_geometry(geometry)
 

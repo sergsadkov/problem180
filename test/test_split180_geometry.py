@@ -35,3 +35,14 @@ def test_linestring():
 
 def test_polygon():
     check_parsing(test_lr.GetFeature(2)).ExportToWkt() == 'MULTIPOLYGON (((42.2673084292096 59.944926664255, 75.0211577247333 62.6922826805411, 47.1942850696495 67.2099881248319, 23.0620579829856 63.2777691933206, 26.5176224655007 66.1661342312123, 15.0717845363254 58.7370412696996, 42.2673084292096 59.9449266642551)))'
+
+
+# Testing topologically correct polygons supposed to be splitted
+
+def test_polygon_false_split():
+    check_parsing(test_lr.GetFeature(0), filter_valid_polygons=False).ExportToWkt() == \
+    'MULYIPOLYGON ((-170 -50, -180 -50, -180 0, -170 0, -170 50)),((170 -50, 170 0, 180 0, 180 -50, 170 -50))'
+
+def test_polygon_abort_split():
+    check_parsing(test_lr.GetFeature(0), filter_valid_polygons=True).ExportToWkt() == \
+    'MULTIPOLYGON (((-170 -50, 170 -50, 170 0, -170 0, -170 -50)))'
