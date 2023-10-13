@@ -7,9 +7,9 @@ from osgeo import ogr
 from ..problem180meridian import split180_geometry
 
 
-def check_parsing(feature):
+def check_parsing(feature, **kwargs):
     geometry = feature.GetGeometryRef()
-    new_geometry = split180_geometry(geometry)
+    new_geometry = split180_geometry(geometry, **kwargs)
     if new_geometry is not None:
         print(new_geometry)
     return new_geometry
