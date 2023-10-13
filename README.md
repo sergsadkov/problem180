@@ -28,7 +28,7 @@ The module contains the following functions (version 0.1.4):
 
 `split180_multipolygon(coordinates, lon_buffer=0)` - splits polygon/multipolygon geometry coordinates by the 180th meridian and returns ogr.Geometry Multipolygon
 
-`split180_geometry(geometry, lon_buffer=0)` - splits ogr.Geometry by the 180th meridian and returns another ogr.Geometry. Supported geometry types: Linestring, Multilinestring, Polygon, Multipolygon. Point and Multipoint objects wouldn't be changed; other types cause Warning Exception
+`split180_geometry(geometry, lon_buffer=0,  filter_valid_polygons=False)` - splits ogr.Geometry by the 180th meridian and returns another ogr.Geometry. Supported geometry types: Linestring, Multilinestring, Polygon, Multipolygon. Point and Multipoint objects wouldn't be changed; other types cause Warning Exception.`filter_valid_polygons` option - if True all valid polygons are not checked but returned as they are as ogr.Multipolygon objects
 
 ## Development
 
