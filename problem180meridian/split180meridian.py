@@ -141,16 +141,17 @@ def split180_multipolygon(coordinates, lon_buffer=0):
     geoms = PolygonHierarchy()
 
     for polygon in coordinates:
-        for arring in polygon:
 
-            cross, check = check180(arring)
+        for chain in polygon:
+
+            cross, check = check180(chain)
 
             if cross:
-                chains = split180_coordinates(arring, check, lon_buffer=lon_buffer)
+                chains = split180_coordinates(chain, check, lon_buffer=lon_buffer)
                 multipolygon = coordinate_chains_to_multipolygon(chains)
                 geoms.join_geometry(multipolygon)
             else:
-                point_str = ','.join(['%f %f' % (p[0], p[1]) for p in arring])
+                point_str = ','.join(['%f %f' % (p[0], p[1]) for p in chain])
                 wkt = f"MULTIPOLYGON ((({point_str})))"
                 geoms.join_geometry(ogr.Geometry(wkt=wkt))
 
