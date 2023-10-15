@@ -6,6 +6,7 @@
 """
 
 
+from .check_coordinates import *
 from .split180meridian import *
 
 __author__ = 'sergsadkov'
