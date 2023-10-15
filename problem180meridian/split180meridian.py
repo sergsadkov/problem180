@@ -1,4 +1,4 @@
-import numpy as np
+
 
 try:
     from osgeo import ogr
